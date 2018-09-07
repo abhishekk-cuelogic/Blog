@@ -7,9 +7,11 @@ app.use(bodyParser.urlencoded({extended:false}));
 
 import userSignupRouter from './routes/userSignupRoute';
 import userSigninRouter from './routes/userSigninRoute';
+import userProfileRouter from './routes/userProfileRoute';
 
 app.use('/',userSignupRouter);
 app.use('/signin',userSigninRouter);
+app.use('/profile',userProfileRouter);
 
 app.listen(3000);
 
