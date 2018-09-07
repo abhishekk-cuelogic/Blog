@@ -8,10 +8,12 @@ app.use(bodyParser.urlencoded({extended:false}));
 import userSignupRouter from './routes/userSignupRoute';
 import userSigninRouter from './routes/userSigninRoute';
 import userProfileRouter from './routes/userProfileRoute';
+import userPostRouter from './routes/userPostRoute';
 
 app.use('/',userSignupRouter);
 app.use('/signin',userSigninRouter);
 app.use('/profile',userProfileRouter);
+app.use('/post',userPostRouter);
 
 app.listen(3000);
 
