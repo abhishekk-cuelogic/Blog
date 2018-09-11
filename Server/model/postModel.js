@@ -8,6 +8,11 @@ const commentSchema = new Schema({
     commentData:String
 });
 
+const ratingSchema = new Schema({
+    userName:String,
+    rating:Number
+})
+
 const postSchema = new Schema({
     userName:String,
     title:String,
@@ -19,7 +24,8 @@ const postSchema = new Schema({
     video:String,
     views:Number,
     likes:Number,
-    comment:[commentSchema]
+    comment:[commentSchema],
+    rating:[ratingSchema]
 });
 
 const post = mongoose.model('post',postSchema);
