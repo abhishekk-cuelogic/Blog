@@ -1,13 +1,22 @@
 import express from 'express';
 import postController from '../controller/postController';
+import searchPostController from '../controller/searchPostController';
 
 const router = express.Router();
 
 router.get('/',postController.getAllPost);
 router.post('/',postController.savePost);
-router.put('/view/:id',postController.increaseViewCounter);
-router.put('/like/:id',postController.increaseLikeCounnter);
-router.put('/comment/:id',postController.addComment);
+router.put('/:postId',postController.updatePost);
+router.delete('/:postId',postController.deletePost);
+router.put('/view/:postId',postController.increaseViewCounter);
+router.put('/like/:postId',postController.increaseLikeCounnter);
+router.put('/comment/:postId',postController.addComment);
+router.put('/rating/:postId',postController.addRating);
+router.get('/rating/:postId',postController.getAverageRating);
+router.get('/popular',postController.getPopularPost);
+router.get('/recent',searchPostController.getRecentPost);
+router.get('/year/:year',searchPostController.getPostByYear);
+router.get('/catagory/:catagory',searchPostController.getPostByCatagory);
 
 module.exports = router;
 
