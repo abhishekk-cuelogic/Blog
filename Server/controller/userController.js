@@ -31,7 +31,9 @@ class userController {
                 res.status(500).send("Internal Server Error");
             } else{
                 if(user === null) {
-                    res.send("Not valid UserName");
+                    res.json({
+                        message:'Not valid UserName'
+                    });
                 }
                 else{
                     if(bcrypt.compareSync(req.body.password , user.passWord)){
@@ -50,7 +52,9 @@ class userController {
                             username:req.body.username
                         })
                     } else {
-                        res.send("Wrong Password");
+                        res.json({
+                            message:'Wrong Password'
+                        });
                     }
                 }
                 
