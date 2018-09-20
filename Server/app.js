@@ -5,6 +5,12 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+ });
+
 import userSignupRouter from './routes/userSignupRoute';
 import userSigninRouter from './routes/userSigninRoute';
 import userProfileRouter from './routes/userProfileRoute';
@@ -15,6 +21,6 @@ app.use('/signin',userSigninRouter);
 app.use('/profile',userProfileRouter);
 app.use('/post',userPostRouter);
 
-app.listen(3000);
+app.listen(2700);
 
-console.log('Server started on port 3000');
+console.log('Server started on port 2700');
