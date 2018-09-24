@@ -4,27 +4,7 @@ import multer from 'multer';
 
 class profileController {
 
-    storage = multer.diskStorage({
-        destination:'./public',
-        filename:(req,file,cb)=>{
-            cb(null,file.fieldname+'-'+Date.now()+path.extname(file.originalname))
-        }
-    });
-
-    upload = multer ({
-        storage: storage
-    }).single('myImage');
-
-
     saveProfile (req,res) {
-
-        this.upload(req,res, (err) => {
-            if(err) {
-                res.json(err);
-            } else {
-                console.log(req);
-            }
-        })
 
         let userProfile = {
             userName:req.body.userName,
@@ -35,9 +15,9 @@ class profileController {
             profileImage:req.body.profileImage
         }
 
-        // let data = new profile(userProfile);
-        // data.save();
-        // res.send("Profile Saved Successfully");
+        let data = new profile(userProfile);
+        data.save();
+        res.send("Profile Saved Successfully");
     }
 
     getProfile (req,res) {
