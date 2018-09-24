@@ -32,7 +32,7 @@ class userController {
             } else{
                 if(user === null) {
                     res.json({
-                        message:'Not valid UserName'
+                        message:false
                     });
                 }
                 else{
@@ -47,13 +47,13 @@ class userController {
                         });
 
                         res.json({
-                            message:'login successful!!!',
+                            message:true,
                             token:token,
                             username:req.body.username
                         })
                     } else {
                         res.json({
-                            message:'Wrong Password'
+                            message:false
                         });
                     }
                 }
