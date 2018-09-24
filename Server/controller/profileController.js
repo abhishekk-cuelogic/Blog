@@ -1,4 +1,5 @@
 import profile from '../model/profileModel';
+import multer from 'multer';
 
 
 class profileController {

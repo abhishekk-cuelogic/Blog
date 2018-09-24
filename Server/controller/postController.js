@@ -1,26 +1,47 @@
 import post from '../model/postModel';
 import moment from 'moment';
+import multer from 'multer';
+import path from 'path';
 
 class postController {
 
     savePost (req,res) {
 
-        let postData = {
-            userName:req.body.userName,
-            title:req.body.title,
-            date:moment().format('MMMM Do YYYY'),
-            authorName:req.body.authorName,
-            catagory:req.body.catagory,
-            postContent:req.body.postContent,
-            image:req.body.image,
-            video:req.body.video,
-            views:0,
-            likes:0
-        }
+        const storage = multer.diskStorage({
+            destination:'./public/uploads/',
+            filename:function(req,file,cb){
+                cb(null,file.fieldname+'-'+Date.now()+path.extname(file.originalname) )
+            }
+        });
+        
+        const upload = multer ({
+            storage: storage
+        }).single('myImage');
+        
+        upload(req,res,(err) => {
+            if(err) {
+                res.json(err);
+            } else {
+                let postData = {
+                    userName:req.body.userName,
+                    title:req.body.title,
+                    date:moment().format('MMMM Do YYYY'),
+                    authorName:req.body.authorName,
+                    catagory:req.body.catagory,
+                    postContent:req.body.content,
+                    image:req.file.path,
+                    video:req.body.video,
+                    views:0,
+                    likes:0
+                }
 
-        let data = new post(postData);
-        data.save();
-        res.send("Post saved successfully");
+                let data = new post(postData);
+                data.save();
+                res.json('Blog saved successfully!!');
+            }
+        })
+
+        
     }
 
     updatePost (req,res) {
