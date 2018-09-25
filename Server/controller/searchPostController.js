@@ -52,12 +52,17 @@ class searchPostController {
                         let date=doc.date;
                         let dateObj=moment(date,'MMMM Do YYYY');
                         let diff = dateObj.fromNow();
+                        console.log(diff);
                         let string=diff.split(' ');
 
-                        if(string[1] === 'hours') {
-                            if(string[0] < 18) {
+                        if(string[1] === 'days') {
+                            if(string[0] <= 2) {
                                 return doc;
                             }
+                        }
+
+                        if(string[1] === 'hours') {
+                                return doc;                           
                         }
                }) 
 

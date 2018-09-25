@@ -3,10 +3,11 @@ mongoose.connect('mongodb://localhost:27017/Blog',{ useNewUrlParser: true });
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    userName:String,
+    userName:{type:String , unique:true },
     passWord:String
 });
 
 const user = mongoose.model('user',userSchema);
 
 module.exports = user;
+

@@ -19,9 +19,15 @@ class userController {
         }
 
         let data = new user(userDetail);
-        data.save();
-        res.send("signUp Successful");
-
+        data.save(error => {
+            if(error) {
+                if (error.code === 11000) {
+                    res.send('username alredy avaliable');
+                }
+            }else {
+                res.send('signup successful!!!');
+            }
+        });
     }
 
     signIn (req,res) {
