@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import user from '../model/userModel';
+import nodemailer from 'nodemailer';
+import UIDGenerator from 'uid-generator';
 
 const secretekey = 'imsecrete';
 
@@ -66,6 +68,57 @@ class userController {
                 
             }
             
+        })
+    }
+
+    forgotPassword (req,res) {
+        console.log("forgetpassword hit");
+
+        const uidgen = new UIDGenerator();
+        let token = uidgen.generateSync();
+
+        user.findOne({userName:req.body.email}, (err,user)=> {
+            if(err) {
+                res.json({
+                    message:"Internal Server Error"
+                })
+            } else {
+                if(user === null) {
+                    res.json({
+                        message:"UserName not avialable in Database"
+                    })
+                } else {
+
+                    let transporter = nodemailer.createTransport({
+                        service: 'gmail',
+                        auth: {
+                        user: 'abhishek.khutwad@cuelogic.com',
+                        pass: 'cuelogicpassword'
+                        }
+                        });
+
+                        let mailOptions = {
+                            from: '"Abhishek Khutwad" <abhishek.khutwad@cuelogic.com>', // sender address
+                            to: req.body.email, // list of receivers
+                            subject: ' Reset Your Password', // Subject line
+                            text: '', // plain text body
+                            html: `<b>reset your password at this <a href='http://localhost:3000/changepassword/${token}'>link</a> </b>` // html body
+                            };
+
+                    transporter.sendMail(mailOptions, function(error, info){
+                        if(error){
+                            return console.log(error);
+                        }
+                        console.log('Message sent: ' + info.response);
+                    });
+
+                    res.json({
+                        message : true,
+                        token: token
+                    })
+                    
+                }
+            }
         })
     }
 }
