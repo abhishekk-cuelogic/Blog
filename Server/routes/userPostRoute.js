@@ -17,6 +17,7 @@ router.get('/popular',postController.getPopularPost);
 router.get('/recent',searchPostController.getRecentPost);
 router.get('/year/:year',searchPostController.getPostByYear);
 router.get('/catagory/:catagory',searchPostController.getPostByCatagory);
+router.get('/id/:postId',searchPostController.getPostById);
 
 module.exports = router;
 

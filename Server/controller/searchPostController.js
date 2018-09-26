@@ -3,6 +3,17 @@ import moment from 'moment';
 
 class searchPostController {
 
+
+    getPostById (req,res) {
+        post.findOne({_id:req.params.postId} , (err,post) => {
+            if(err) {
+                res.json('no such post');
+            } else {
+                res.json(post);
+            }
+        })
+    }
+
     getPostByYear (req,res) {
         post.find({}, (err,posts) => {
 
@@ -47,7 +58,7 @@ class searchPostController {
            if(err) {
                res.status(500).send('Internal Server Error');
            } else {
-               let recentPosts=posts.filter((doc) => {
+               let Posts=posts.filter((doc) => {
                
                         let date=doc.date;
                         let dateObj=moment(date,'MMMM Do YYYY');
@@ -56,7 +67,7 @@ class searchPostController {
                         let string=diff.split(' ');
 
                         if(string[1] === 'days') {
-                            if(string[0] <= 2) {
+                            if(string[0] <= 3) {
                                 return doc;
                             }
                         }
@@ -65,6 +76,8 @@ class searchPostController {
                                 return doc;                           
                         }
                }) 
+
+               let recentPosts = Posts.slice(-4);
 
                res.json(recentPosts);
            }
