@@ -89,6 +89,9 @@ class userController {
                     })
                 } else {
 
+                    user.forgotToken = token;
+                    user.save();
+
                     let transporter = nodemailer.createTransport({
                         service: 'gmail',
                         auth: {
@@ -118,6 +121,44 @@ class userController {
                     })
                     
                 }
+            }
+        })
+    }
+
+
+    getToken (req,res)  {
+
+        user.findOne({forgotToken:req.body.token},(err,doc) => {
+            if(err) {
+                res.send("Internal server error");
+            } else {
+                if(doc === null) {
+                    res.send("Not authorize Link try again!!")
+                } else {
+                    res.json({
+                        userName:doc.userName
+                    })
+                }
+            }
+        })
+    }
+
+    resetPassword (req,res) {
+        user.findOne({userName:req.body.userName} , (err,doc) => {
+            if(err) {
+                res.send("Internal Server Error");
+            } else { 
+                if(doc === null) {
+                    res.send("no user");
+                } else {
+                    let passWord = req.body.passWord;
+                    let hash = bcrypt.hashSync(passWord,10);
+
+                    doc.passWord = hash;
+                    doc.save();
+                    res.send("Password reset succesfully!!!");
+                }
+                
             }
         })
     }

@@ -51,34 +51,12 @@ class searchPostController {
         })
     }
 
-    getRecentPost (req,res) {
-       let limit= moment().startOf('day').fromNow().split(' ')[0];
-       
+    getRecentPost (req,res) { 
        post.find({}, (err,posts) => {
            if(err) {
                res.status(500).send('Internal Server Error');
            } else {
-               let Posts=posts.filter((doc) => {
-               
-                        let date=doc.date;
-                        let dateObj=moment(date,'MMMM Do YYYY');
-                        let diff = dateObj.fromNow();
-                        console.log(diff);
-                        let string=diff.split(' ');
-
-                        if(string[1] === 'days') {
-                            if(string[0] <= 3) {
-                                return doc;
-                            }
-                        }
-
-                        if(string[1] === 'hours') {
-                                return doc;                           
-                        }
-               }) 
-
-               let recentPosts = Posts.slice(-4);
-
+               let recentPosts = posts.slice(-4);
                res.json(recentPosts);
            }
        })
