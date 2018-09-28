@@ -117,7 +117,7 @@ class postController {
     }
 
     getPopularPost (req,res) {
-        post.find({}).sort({views:-1}).limit(2).exec( (err,posts) => {
+        post.find({}).sort({views:-1}).limit(4).exec( (err,posts) => {
             if(err) {
                 res.status(500).send('Internal Server Error');
             } else {
