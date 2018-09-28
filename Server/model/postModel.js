@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 
 const commentSchema = new Schema({
     userName:String,
-    commentData:String
+    commentData:String,
+    date:String
 });
 
 const ratingSchema = new Schema({

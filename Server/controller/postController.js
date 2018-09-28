@@ -87,7 +87,7 @@ class postController {
 
     addComment (req,res) {
         post.findOne({_id:req.params.postId} , (err,post) => {
-            post.comment.push({userName:req.body.userName,commentData:req.body.commentData});
+            post.comment.push({userName:req.body.userName,commentData:req.body.commentData,date:moment().format('MMMM Do YYYY, h:mm:ss a')});
             post.save();
             res.send(post);
         })
