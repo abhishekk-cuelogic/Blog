@@ -1,5 +1,4 @@
 import post from '../model/postModel';
-import moment from 'moment';
 
 class searchPostController {
 

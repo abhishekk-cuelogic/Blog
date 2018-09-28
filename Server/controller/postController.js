@@ -31,8 +31,7 @@ class postController {
                     postContent:req.body.content,
                     image:req.file.path,
                     video:req.body.video,
-                    views:0,
-                    likes:0
+                    views:0
                 }
 
                 let data = new post(postData);
@@ -78,9 +77,9 @@ class postController {
         })
     }
 
-    increaseLikeCounnter (req,res) {
+    increaseLikeCounter (req,res) {
         post.findOne({_id:req.params.postId}, (err,post) => {
-            post.likes = post.likes + 1;
+            post.likes.push({userName:req.body.userName})
             post.save();
             res.send(post);
         })

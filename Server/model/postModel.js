@@ -11,7 +11,12 @@ const commentSchema = new Schema({
 const ratingSchema = new Schema({
     userName:String,
     rating:Number
-})
+});
+
+const likeSchema = new Schema({
+    userName:String
+});
+
 
 const postSchema = new Schema({
     userName:String,
@@ -23,7 +28,7 @@ const postSchema = new Schema({
     image:String,
     video:String,
     views:Number,
-    likes:Number,
+    likes:[likeSchema],
     comment:[commentSchema],
     rating:[ratingSchema]
 });
