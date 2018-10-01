@@ -60,6 +60,17 @@ class searchPostController {
            }
        })
     }
+
+    getYML (req,res) {
+        post.find({}, (err,posts) =>{
+            if(err) {
+                res.status(500).send('Internal server Error');
+            } else {
+                let yml =posts.slice(0,4);
+                res.json(yml);
+            }
+        })
+    }
 }
 
 export default new searchPostController();
