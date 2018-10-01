@@ -5,83 +5,119 @@ import path from 'path';
 
 class profileController {
 
-    saveProfile (req,res) {
+    saveProfile(req, res) {
 
 
         const storage = multer.diskStorage({
-            destination:'./public/uploads/',
-            filename:function(req,file,cb){
-                cb(null,file.fieldname+'-'+Date.now()+path.extname(file.originalname) )
+            destination: './public/uploads/',
+            filename: function (req, file, cb) {
+                cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
             }
         });
-        
-        const upload = multer ({
+
+        const upload = multer({
             storage: storage
         }).single('myImage');
 
 
-        upload(req,res,(err) => {
-            if(err) {
+        upload(req, res, (err) => {
+            if (err) {
                 res.json(err);
             } else {
-               console.log(req);
+                console.log(req);
+                let profileImage;
 
-               let userProfile = {
-                userName:req.body.userName,
-                fullName:req.body.fullName,
-                contact:req.body.contact,
-                skills:req.body.skills,
-                profileImage:req.file.path
-            }
+                if (req.file === undefined) {
+                    console.log('inside undefined');
+                    profileImage = 'public/uploads/images.png';
+                } else {
+                    profileImage = req.file.path;
+                }
 
-                let data = new profile(userProfile);
-                data.save();
-                res.send("Profile Saved Successfully");
+                profile.findOne({ userName: req.body.userName }, (err, doc) => {
+                    if (err => {
+                        res.json({
+                            message: err
+                        })
+                    })
+
+                        console.log('doc=====>',doc);
+
+                        if (doc === null) {
+
+                            let userData = {
+                                userName : req.body.userName,
+                                fullName : req.body.fullName,
+                                contact : req.body.contact,
+                                skills : req.body.skills,
+                                profileImage : profileImage
+                            }
+                            let data = new profile(userData)
+                            data.save();
+                        } 
+
+                        if(doc !== null) {
+                            console.log('notnull',doc.profileImage);
+                            console.log(profileImage);
+                            if( doc.profileImage !== 'public/uploads/images.png') {
+                                doc.userName = req.body.userName,
+                                doc.fullName = req.body.fullName,
+                                doc.contact = req.body.contact,
+                                doc.skills = req.body.skills
+                                doc.save();
+                            } 
+                            if(doc.profileImage === 'public/uploads/images.png') {
+                                doc.userName = req.body.userName,
+                                doc.fullName = req.body.fullName,
+                                doc.contact = req.body.contact,
+                                doc.skills = req.body.skills,
+                                doc.profileImage = profileImage
+                                doc.save();
+                            }
+                            
+                        }
+                })
             }
         })
-
-       
-
-        
     }
 
-    getProfile (req,res) {
+    getProfile(req, res) {
         console.log(req.params.user);
 
-        profile.findOne({userName:req.params.user},(err,profile) => {
+        profile.findOne({ userName: req.params.user }, (err, profile) => {
             res.json(profile);
         })
     }
 
-    addFollower (req,res) {
+    addFollower(req, res) {
 
-        profile.findOne({userName:req.params.user}, (err,user) => {
+        profile.findOne({ userName: req.params.user }, (err, user) => {
 
-            if(err) {
+            if (err) {
                 res.status(500).send("Internal Server Error")
             }
 
-            user.followers.push({userName:req.body.userName});
+            user.followers.push({ userName: req.body.userName });
             user.save();
         })
 
-        profile.findOne({userName:req.body.userName}, (err,user) => {
+        profile.findOne({ userName: req.body.userName }, (err, user) => {
 
-            if(err) {
+            if (err) {
                 res.status(500).send("Internal Server Error")
             }
 
-            user.following.push({userName:req.params.user});
+            user.following.push({ userName: req.params.user });
             user.save();
         })
 
         res.send("following");
     }
 
-    getFollowers (req,res) {
+    getFollowers(req, res) {
 
-        profile.findOne({userName:req.params.user}, (err,user) => {
-            if(err) {
+        profile.findOne({ userName: req.params.user }, (err, user) => {
+            if (err) {
                 res.status(500).send("Internal Server Error");
             }
 
@@ -89,10 +125,10 @@ class profileController {
         })
     }
 
-    getFollowings (req,res) {
+    getFollowings(req, res) {
 
-        profile.findOne({userName:req.params.user}, (err,user) => {
-            if(err) {
+        profile.findOne({ userName: req.params.user }, (err, user) => {
+            if (err) {
                 res.status(500).send("Internal Server Error");
             }
 
@@ -102,3 +138,7 @@ class profileController {
 }
 
 export default new profileController();
+
+
+
+
