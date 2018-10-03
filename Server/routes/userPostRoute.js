@@ -10,6 +10,7 @@ router.put('/:postId',postController.updatePost);
 router.delete('/:postId',postController.deletePost);
 router.put('/view/:postId',postController.increaseViewCounter);
 router.put('/like/:postId',postController.increaseLikeCounter);
+router.get('/like/:postId',postController.getLikes);
 router.put('/comment/:postId',postController.addComment);
 router.put('/rating/:postId',postController.addRating);
 router.get('/rating/:postId',postController.getAverageRating);

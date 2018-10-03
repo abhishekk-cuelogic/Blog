@@ -125,6 +125,12 @@ class postController {
             }
         })
     }
+
+    getLikes (req,res) {
+        post.findOne({_id:req.params.postId}, (err,post) => {
+            res.json(post.likes)
+        })
+    }
 }
 
 export default new postController();
