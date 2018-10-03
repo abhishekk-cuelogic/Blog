@@ -131,8 +131,14 @@ class profileController {
             if (err) {
                 res.status(500).send("Internal Server Error");
             }
+            console.log(user);
 
-            res.json(user.following);
+            if(user === null) {
+                res.json(null);
+            } else  {
+                res.json(user.following);
+            }
+            
         })
     }
 }
