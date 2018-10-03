@@ -20,6 +20,7 @@ router.get('/yml',searchPostController.getYML);
 router.get('/year/:year',searchPostController.getPostByYear);
 router.get('/catagory/:catagory',searchPostController.getPostByCatagory);
 router.get('/id/:postId',searchPostController.getPostById);
+router.get('/getallpost/:userName',postController.getUserAllPost);
 
 module.exports = router;
 

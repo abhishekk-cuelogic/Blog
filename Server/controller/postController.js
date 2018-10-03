@@ -69,6 +69,12 @@ class postController {
         })
     }
 
+    getUserAllPost (req,res) {
+        post.find({userName:req.params.userName},(err,posts) => {
+            res.json(posts);
+        })
+    }
+
     increaseViewCounter (req,res) {
         post.findOne({_id:req.params.postId}, (err,post) => {
             post.views = post.views + 1;
