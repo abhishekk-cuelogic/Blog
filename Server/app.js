@@ -17,11 +17,13 @@ import userSignupRouter from './routes/userSignupRoute';
 import userSigninRouter from './routes/userSigninRoute';
 import userProfileRouter from './routes/userProfileRoute';
 import userPostRouter from './routes/userPostRoute';
+import userActivityRouter from './routes/userActivityRoute';
 
 app.use('/',userSignupRouter);
 app.use('/signin',userSigninRouter);
 app.use('/profile',userProfileRouter);
 app.use('/post',userPostRouter);
+app.use('/useractivity',userActivityRouter);
 
 app.get('/public/uploads/:id',function(req,res){
     res.sendFile(path.join(__dirname+'/public/uploads/'+req.params.id));
