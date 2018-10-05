@@ -60,11 +60,21 @@ class profileController {
                             console.log('notnull',doc.profileImage);
                             console.log(profileImage);
                             if( doc.profileImage !== 'public/uploads/images.png') {
-                                doc.userName = req.body.userName,
-                                doc.fullName = req.body.fullName,
-                                doc.contact = req.body.contact,
-                                doc.skills = req.body.skills
-                                doc.save();
+                                if(doc.profileImage === profileImage){
+                                    doc.userName = req.body.userName,
+                                    doc.fullName = req.body.fullName,
+                                    doc.contact = req.body.contact,
+                                    doc.skills = req.body.skills
+                                    doc.save();
+                                } else {
+                                    doc.userName = req.body.userName,
+                                    doc.fullName = req.body.fullName,
+                                    doc.contact = req.body.contact,
+                                    doc.skills = req.body.skills,
+                                    doc.profileImage = profileImage
+                                    doc.save();
+                                }
+                                
                             } 
                             if(doc.profileImage === 'public/uploads/images.png') {
                                 doc.userName = req.body.userName,
