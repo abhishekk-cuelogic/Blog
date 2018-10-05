@@ -45,10 +45,11 @@ class postController {
 
     updatePost (req,res) {
         post.findOneAndUpdate({_id:req.params.postId}, req.body ,{new:true}, (err,post) => {
+            console.log(req);
             if(err) {
                 res.status(500).send("Internal Server Error");
             } else {
-                res.json(post);
+                res.json('Post successfully Updated');
             }
         })
     }
@@ -60,6 +61,16 @@ class postController {
             } else {
                 res.json("Post Deleted Successfully")
             }
+        })
+    }
+
+    getPost (req,res) {
+        post.findOne({_id:req.params.postId},(err,post) => {
+            if(err) {
+                res.json(err);
+            } else {
+                res.json(post);
+            }      
         })
     }
 
@@ -135,6 +146,12 @@ class postController {
     getLikes (req,res) {
         post.findOne({_id:req.params.postId}, (err,post) => {
             res.json(post.likes)
+        })
+    }
+
+    getRating (req,res) {
+        post.findOne({_id:req.params.postId} , (err,post) => {
+            res.json(post.rating);
         })
     }
 }

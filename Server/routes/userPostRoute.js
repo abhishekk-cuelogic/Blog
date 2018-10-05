@@ -5,6 +5,7 @@ import searchPostController from '../controller/searchPostController';
 const router = express.Router();
 
 router.get('/',postController.getAllPost);
+router.get('/getone/:postId',postController.getPost);
 router.post('/',postController.savePost);
 router.put('/:postId',postController.updatePost);
 router.delete('/:postId',postController.deletePost);
@@ -13,6 +14,7 @@ router.put('/like/:postId',postController.increaseLikeCounter);
 router.get('/like/:postId',postController.getLikes);
 router.put('/comment/:postId',postController.addComment);
 router.put('/rating/:postId',postController.addRating);
+router.get('/rating/all/:postId',postController.getRating);
 router.get('/rating/:postId',postController.getAverageRating);
 router.get('/popular',postController.getPopularPost);
 router.get('/recent',searchPostController.getRecentPost);
