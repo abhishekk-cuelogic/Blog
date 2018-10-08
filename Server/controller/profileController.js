@@ -36,24 +36,38 @@ class profileController {
                                 message:'Internal Server Error'
                             })
                         } else {
-                            if(doc.profileImage !== 'public/uploads/images.png') {
-                                doc.userName = req.body.userName,
-                                doc.fullName = req.body.fullName,
-                                doc.contact = req.body.contact,
-                                doc.skills = req.body.skills
-                                doc.save();
+                            if(doc === null) {
+                                let p = {
+                                    userName : req.body.userName,
+                                    fullName : req.body.fullName,
+                                    contact : req.body.contact,
+                                    skills : req.body.skills,
+                                    profileImage : profileImage
+                                }
 
+                                let data = new profile(p);
+                                data.save();
                             } else {
-                                doc.userName = req.body.userName,
-                                doc.fullName = req.body.fullName,
-                                doc.contact = req.body.contact,
-                                doc.skills = req.body.skills,
-                                doc.profileImage = profileImage
-                                doc.save();
-                            }                         
-                            res.json({
-                                message:'Profile Updated Successfully'
-                            })
+                                if(doc.profileImage !== 'public/uploads/images.png') {
+                                    doc.userName = req.body.userName,
+                                    doc.fullName = req.body.fullName,
+                                    doc.contact = req.body.contact,
+                                    doc.skills = req.body.skills
+                                    doc.save();
+    
+                                } else {
+                                    doc.userName = req.body.userName,
+                                    doc.fullName = req.body.fullName,
+                                    doc.contact = req.body.contact,
+                                    doc.skills = req.body.skills,
+                                    doc.profileImage = profileImage
+                                    doc.save();
+                                }                         
+                                res.json({
+                                    message:'Profile Updated Successfully'
+                                })
+                            }
+                            
                         }
                         
                     })
