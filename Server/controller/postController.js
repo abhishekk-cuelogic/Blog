@@ -154,6 +154,22 @@ class postController {
             res.json(post.rating);
         })
     }
+
+    deleteComment (req,res) {
+       post.findOne({_id:req.params.postId},(err,post) => {
+           if(err){
+                res.json(err);
+           }else{
+            post.comment.forEach(obj => {
+                if(obj._id == req.params.cid){
+                    obj.remove();
+                }
+            })
+            post.save();
+            res.json('comment deleted successfully');
+           }          
+       })
+    }
 }
 
 export default new postController();

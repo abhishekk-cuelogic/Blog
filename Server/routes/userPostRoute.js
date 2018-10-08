@@ -13,6 +13,7 @@ router.put('/view/:postId',postController.increaseViewCounter);
 router.put('/like/:postId',postController.increaseLikeCounter);
 router.get('/like/:postId',postController.getLikes);
 router.put('/comment/:postId',postController.addComment);
+router.put('/comment/:postId/:cid',postController.deleteComment);
 router.put('/rating/:postId',postController.addRating);
 router.get('/rating/all/:postId',postController.getRating);
 router.get('/rating/:postId',postController.getAverageRating);
