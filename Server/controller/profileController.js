@@ -30,63 +30,55 @@ class profileController {
                 if (req.file === undefined) {
                     console.log('inside undefined');
                     profileImage = 'public/uploads/images.png';
-                } else {
-                    profileImage = req.file.path;
-                }
+                    profile.findOne({userName: req.body.userName}, (err,doc) =>{
+                        if(err) {
+                            res.json({
+                                message:'Internal Server Error'
+                            })
+                        } else {
+                            if(doc.profileImage !== 'public/uploads/images.png') {
+                                doc.userName = req.body.userName,
+                                doc.fullName = req.body.fullName,
+                                doc.contact = req.body.contact,
+                                doc.skills = req.body.skills
+                                doc.save();
 
-                profile.findOne({ userName: req.body.userName }, (err, doc) => {
-                    if (err => {
-                        res.json({
-                            message: err
-                        })
-                    })
-
-                        console.log('doc=====>',doc);
-
-                        if (doc === null) {
-
-                            let userData = {
-                                userName : req.body.userName,
-                                fullName : req.body.fullName,
-                                contact : req.body.contact,
-                                skills : req.body.skills,
-                                profileImage : profileImage
-                            }
-                            let data = new profile(userData)
-                            data.save();
-                        } 
-
-                        if(doc !== null) {
-                            console.log('notnull',doc.profileImage);
-                            console.log(profileImage);
-                            if( doc.profileImage !== 'public/uploads/images.png') {
-                                if(doc.profileImage === profileImage){
-                                    doc.userName = req.body.userName,
-                                    doc.fullName = req.body.fullName,
-                                    doc.contact = req.body.contact,
-                                    doc.skills = req.body.skills
-                                    doc.save();
-                                } else {
-                                    doc.userName = req.body.userName,
-                                    doc.fullName = req.body.fullName,
-                                    doc.contact = req.body.contact,
-                                    doc.skills = req.body.skills,
-                                    doc.profileImage = profileImage
-                                    doc.save();
-                                }
-                                
-                            } 
-                            if(doc.profileImage === 'public/uploads/images.png') {
+                            } else {
                                 doc.userName = req.body.userName,
                                 doc.fullName = req.body.fullName,
                                 doc.contact = req.body.contact,
                                 doc.skills = req.body.skills,
                                 doc.profileImage = profileImage
                                 doc.save();
-                            }
-                            
+                            }                         
+                            res.json({
+                                message:'Profile Updated Successfully'
+                            })
                         }
-                })
+                        
+                    })
+                } else {
+                    profileImage = req.file.path;
+                    profile.findOne({userName: req.body.userName}, (err,doc) =>{
+                        if(err) {
+                            res.json({
+                                message:'Internal Server Error'
+                            })
+                        } else  {
+                            doc.userName = req.body.userName,
+                            doc.fullName = req.body.fullName,
+                            doc.contact = req.body.contact,
+                            doc.skills = req.body.skills,
+                            doc.profileImage = profileImage
+                            doc.save();
+                            res.json({
+                                message:'Profile Updated Successfully'
+                            })
+                        }
+                        
+                    })
+                }
+
             }
         })
     }
