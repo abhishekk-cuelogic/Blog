@@ -1,5 +1,5 @@
 import userActivity from '../model/userActivityModel';
-import mongoose from 'mongoose';
+import user from '../model/userModel';
 
 class activityController {
 

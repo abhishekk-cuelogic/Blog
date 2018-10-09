@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import user from '../model/userModel';
 import nodemailer from 'nodemailer';
 import UIDGenerator from 'uid-generator';
+import profile from '../model/profileModel';
 
 const secretekey = 'imsecrete';
 
@@ -159,6 +160,22 @@ class userController {
                     res.send("Password reset succesfully!!!");
                 }
                 
+            }
+        })
+    }
+
+    deleteUser (req,res) {
+        user.findOneAndRemove({userName:req.params.userName}, (err,post) => {
+            if(err) {
+                res.status(500).send("Internal Server Error");
+            } else {
+                profile.findOneAndRemove({userName:req.params.userName},(err,profile) =>{
+                    if(err){
+                        res.status(500).send("Internal Server Error");  
+                    } else {
+                        res.json("User Deleted Successfully")
+                    }
+                })              
             }
         })
     }

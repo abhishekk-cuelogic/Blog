@@ -1,6 +1,7 @@
 import profile from '../model/profileModel';
 import multer from 'multer';
 import path from 'path';
+import user from '../model/userModel';
 
 
 class profileController {
@@ -155,6 +156,16 @@ class profileController {
                 res.json(user.following);
             }
             
+        })
+    }
+   
+    getAllProfile (req,res) {
+        profile.find({},(err,docs) => {
+            if(err) {
+                res.json(err);
+            }else{
+                res.json(docs);
+            }
         })
     }
 }
