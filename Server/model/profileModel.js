@@ -15,6 +15,11 @@ const feedbackSchema = new Schema({
     feed:String
 })
 
+const messageSchema = new Schema({
+    userName:String,
+    msg:String
+})
+
 const profileSchema = new Schema({
     userName:String,
     fullName:String,
@@ -24,7 +29,8 @@ const profileSchema = new Schema({
     profileImage:String,
     followers:[followerSchema],
     following:[followingSchema],
-    feedback:[feedbackSchema]
+    feedback:[feedbackSchema],
+    message:[messageSchema]
 })
 
 const profile = mongoose.model('profile',profileSchema);

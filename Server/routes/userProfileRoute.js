@@ -10,6 +10,8 @@ router.put('/follower/:user',profileController.addFollower);
 router.get('/following/:user',profileController.getFollowings);
 router.get('/',profileController.getAllProfile);
 router.post('/feedback/:user',profileController.addFeedBack);
+router.post('/message/:user',profileController.addMessage);
+router.get('/message/:user',profileController.getMessage);
 
 
 module.exports = router;

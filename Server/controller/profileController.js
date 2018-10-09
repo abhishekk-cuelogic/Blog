@@ -178,6 +178,30 @@ class profileController {
             res.json('feedback saved successfully');
         })
     }
+
+    addMessage (req,res) {
+        profile.findOne({ userName: req.params.user }, (err, user) => {
+
+            if (err) {
+                res.status(500).send("Internal Server Error")
+            }
+
+            user.message.push({ userName: req.body.userName ,msg:req.body.msg});
+            user.save();
+            res.json('message saved successfully');
+        })
+    }
+
+    getMessage (req,res) {
+        profile.findOne({ userName: req.params.user }, (err, user) => {
+
+            if (err) {
+                res.status(500).send("Internal Server Error")
+            }
+
+            res.json(user.message);
+        })
+    }
 }
 
 export default new profileController();
