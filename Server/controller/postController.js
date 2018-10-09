@@ -45,7 +45,6 @@ class postController {
 
     updatePost (req,res) {
         post.findOneAndUpdate({_id:req.params.postId}, req.body ,{new:true}, (err,post) => {
-            console.log(req);
             if(err) {
                 res.status(500).send("Internal Server Error");
             } else {

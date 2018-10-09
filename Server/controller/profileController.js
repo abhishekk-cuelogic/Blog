@@ -1,14 +1,11 @@
 import profile from '../model/profileModel';
 import multer from 'multer';
 import path from 'path';
-import user from '../model/userModel';
 
 
 class profileController {
 
     saveProfile(req, res) {
-
-
         const storage = multer.diskStorage({
             destination: './public/uploads/',
             filename: function (req, file, cb) {
