@@ -16,12 +16,17 @@ class postController {
         
         const upload = multer ({
             storage: storage
-        }).single('myImage');
+        }).any('myImage');
         
         upload(req,res,(err) => {
             if(err) {
                 res.json(err);
             } else {
+                let videopath = '';
+                if(req.files[1]) {
+                    videopath = req.files[1].path
+                }
+
                 let postData = {
                     userName:req.body.userName,
                     title:req.body.title,
@@ -29,8 +34,8 @@ class postController {
                     authorName:req.body.authorName,
                     catagory:req.body.catagory,
                     postContent:req.body.content,
-                    image:req.file.path,
-                    video:req.body.video,
+                    image:req.files[0].path,
+                    video:videopath,
                     views:0
                 }
 
