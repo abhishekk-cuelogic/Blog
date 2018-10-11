@@ -62,6 +62,7 @@ class profileController {
                                     doc.save();
                                 }                         
                                 res.json({
+                                    post:doc,
                                     message:'Profile Updated Successfully'
                                 })
                             }
@@ -84,6 +85,7 @@ class profileController {
                             doc.profileImage = profileImage
                             doc.save();
                             res.json({
+                                post:doc,
                                 message:'Profile Updated Successfully'
                             })
                         }
