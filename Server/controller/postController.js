@@ -170,7 +170,10 @@ class postController {
                 }
             })
             post.save();
-            res.json('comment deleted successfully');
+            res.json({
+                message:'comment deleted successfully',
+                resdata:post
+            });
            }          
        })
     }
